@@ -39,7 +39,7 @@ def importer_task_wrapper(list_key, offset, count, since_last_changed):
     except Exception as exc:
         try:
             # Retries the task after 60 seconds
-            importer_task_wrapper.retry(countdown=5)
+            importer_task_wrapper.retry(countdown=60)
         except MaxRetriesExceededError:
             raise Reject(exc, requeue=False)
 
