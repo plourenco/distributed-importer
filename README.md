@@ -3,7 +3,7 @@
 Build a system to run thousands of import jobs that will:
 
 1. Retrieve contact data from Mailchimp for a client account.
-2. Convert the contact data into the format accepted by Ometria’s API and import it to Ometria under the client’s account for processing/storage.
+2. Convert the contact data into the format accepted by an external API and import it under the client’s account for processing/storage.
 
 ## How to run
 
