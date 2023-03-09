@@ -1,8 +1,6 @@
 from celery.utils.log import get_task_logger
 from datetime import datetime
-from celery import chord, group
-from marshmallow import ValidationError
-from requests import HTTPError
+from celery import group
 from consumer import Consumer
 from celery.exceptions import Reject, MaxRetriesExceededError
 from core.celery import celery
