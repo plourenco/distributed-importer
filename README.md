@@ -73,7 +73,7 @@ A set of messages are then created (or, in other words, tasks) to import a windo
 
 Celery, the distributed task queue in use, groups the tasks and logs their status in a database backend which is used to determine when all records have been processed and the run can be logged as completed.
 
-![Diagrama sem nome drawio(1)](https://user-images.githubusercontent.com/12183954/224170294-36e894bd-7cdf-4e0f-82e4-9f97e1752209.png)
+![architecture drawio](https://user-images.githubusercontent.com/12183954/224189795-f042bd64-83ff-45cd-828d-8d3b76b0aa0d.png)
 
 ## Error handling
 
