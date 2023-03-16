@@ -1,11 +1,12 @@
 from unittest.mock import ANY, patch
 from pytest import raises
-from app import importer_task_wrapper
+import pytest
 from celery.exceptions import Reject, MaxRetriesExceededError
+from importer.task import importer_task_wrapper
 
 
-@patch('app.importer.get_members', return_value=[[], 0])
-@patch('app.consumer.run', return_value=0)
+@patch('importer.task.importer.get_members', return_value=[[], 0])
+@patch('importer.task.consumer.run', return_value=0)
 def test_success(consumer_run, importer_get_members):
     list_key = 'foo'
     importer_task_wrapper(list_key, offset=0, count=1, since_last_changed=None)
@@ -13,12 +14,12 @@ def test_success(consumer_run, importer_get_members):
     consumer_run.assert_called_with([])
 
 
-@patch('app.importer.get_members')
-@patch('app.consumer.run', return_value=0)
-def test_failure(consumer_run, importer_get_members):
+@patch('importer.task.importer.get_members')
+@patch('importer.task.consumer.run', return_value=0)
+@pytest.mark.parametrize("members", [([{}, {}])])
+def test_failure(consumer_run, importer_get_members, members):
     list_key = 'foo'
-    members = [{}, {}]
-    importer_get_members.return_value = [members, 100]
+    importer_get_members.return_value = [members, len(members)]
     with raises(Exception):
         importer_task_wrapper(list_key, offset=0, count=1,
                               since_last_changed=None)
@@ -26,8 +27,8 @@ def test_failure(consumer_run, importer_get_members):
     consumer_run.assert_called_with(members)
 
 
-@patch('app.importer_task_wrapper.retry')
-@patch('app.importer.get_members')
+@patch('importer.task.importer_task_wrapper.retry')
+@patch('importer.task.importer.get_members')
 def test_failure_reject(importer_get_members, importer_task_wrapper_retry):
     list_key = 'foo'
     importer_get_members.side_effect = Exception('test')
