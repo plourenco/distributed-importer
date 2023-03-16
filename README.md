@@ -42,29 +42,13 @@ While the service is running, the RabbitMQ image in use contains a management UI
 
 ![imagem](https://user-images.githubusercontent.com/12183954/224170857-cfe1e5ee-baf5-4d69-af00-fccd7ddf3083.png)
 
-At the time of writing, I unfortunately got blocked by Mailchimp API so testing a full sync was limited:
-
-```html
-<p>
-  We blocked your request because the IP address you’re using looks suspicious.
-  This issue will usually resolve itself after a short period of time, and you
-  can try your request again. You can also try using a different IP address to
-  see if that resolves the issue. <br /><br />
-  If you need additional help, you can try one of these
-  <a
-    href="https://mailchimp.com/help/mailchimp-support-options/#How_to_contact_technical_support"
-    >support options</a
-  >.
-</p>
-```
-
 ## Architecture and implementation
 
 The core architecture consists on a service defined as `importer_task_wrapper` responsible for retrieving a rolling window of records to import and exporting into an API. The service expects to consume a queue message containing:
 
 ```json
 {
- "list_key": "1a2d7ebf82",
+  "list_key": "1a2d7ebf82",
   "offset": 0,
   "count": 1000,
   "since_last_changed": date
