@@ -15,7 +15,7 @@ There is a docker compose file with three services:
 
 Running `docker compose up -d` will bring up all services and start scheduling the task.
 
-![Untitled](https://user-images.githubusercontent.com/12183954/224170447-894f94f9-6b83-403a-874b-eb7b9a7e39f0.png)
+<img width="594" alt="imagem" src="https://user-images.githubusercontent.com/12183954/225512467-c0ccff4a-24f6-4f34-80ef-55c58276e917.png">
 
 A manual import can also be run using the python CLI:
 
