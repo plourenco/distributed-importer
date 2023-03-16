@@ -1,6 +1,6 @@
-# Mailchimp data importer
+# Distributed API importer
 
-Build a system to run thousands of import jobs that will:
+The problem: Build a system to run thousands of import jobs that will:
 
 1. Retrieve contact data from Mailchimp for a client account.
 2. Convert the contact data into the format accepted by an external API and import it under the client’s account for processing/storage.
@@ -45,12 +45,16 @@ While the service is running, the RabbitMQ image in use contains a management UI
 At the time of writing, I unfortunately got blocked by Mailchimp API so testing a full sync was limited:
 
 ```html
-<p>We blocked your request because the IP address you’re using looks suspicious. This issue will usually 
-  resolve itself after a short period of time, and you can try your request again. You can also try
-  using a different IP address to see if that resolves the issue. <br><br>
-  If you need additional help, you can try one of these <a
-  href="https://mailchimp.com/help/mailchimp-support-options/#How_to_contact_technical_support">support
-		options</a>.
+<p>
+  We blocked your request because the IP address you’re using looks suspicious.
+  This issue will usually resolve itself after a short period of time, and you
+  can try your request again. You can also try using a different IP address to
+  see if that resolves the issue. <br /><br />
+  If you need additional help, you can try one of these
+  <a
+    href="https://mailchimp.com/help/mailchimp-support-options/#How_to_contact_technical_support"
+    >support options</a
+  >.
 </p>
 ```
 
@@ -81,4 +85,4 @@ In order to increase the resilience of a single-run in case a sub-set of the rec
 
 The retry mechanism retries the same task 3 times with an interval of 5 seconds, after which, if no acknowledgement (`ACK`) is given by the service, the message will be sent into a dead letter queue for later inspection or ingestion into another service.
 
-In order to be able to reject messages after a certain amount of retries, the services have been configured to give a *late `ACK`* , that is, after completion. When a service starts processing a message, it will become hidden from the queue until `ACK` is given. If no `ACK` is given for a period of 30 minutes (by default in RabbitMQ - but also a sensible threshold in comparison with the retry interval or processing time), the message will become visible again.
+In order to be able to reject messages after a certain amount of retries, the services have been configured to give a _late `ACK`_ , that is, after completion. When a service starts processing a message, it will become hidden from the queue until `ACK` is given. If no `ACK` is given for a period of 30 minutes (by default in RabbitMQ - but also a sensible threshold in comparison with the retry interval or processing time), the message will become visible again.
